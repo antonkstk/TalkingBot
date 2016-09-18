@@ -19,7 +19,12 @@ public class HelloController {
     }
 
     @RequestMapping("/webhook")
-    public String webHookResponse(@RequestParam(required = false) String req) {
-        return req;
+    public String webHookResponse(@RequestParam("hub.challenge") String challenge, @RequestParam("hub.verify_token") String verifyToken) {
+        if(verifyToken.equals(pageToken)) {
+            return challenge;
+        }
+        else {
+            return "ERROR!";
+        }
     }
 }
