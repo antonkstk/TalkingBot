@@ -1,8 +1,11 @@
 package Hello;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * Created by anton on 8/12/16.
@@ -18,7 +21,7 @@ public class HelloController {
         return "Greetings from Spring Boot!";
     }
 
-    @RequestMapping("/webhook")
+    @RequestMapping(value = "/webhook", method = RequestMethod.GET)
     public String webHookResponse(@RequestParam("hub.challenge") String challenge, @RequestParam("hub.verify_token") String verify_token) {
         if(verify_token.equals(verifyToken)) {
             return challenge;
@@ -26,5 +29,11 @@ public class HelloController {
         else {
             return "ERROR!";
         }
+    }
+
+    @RequestMapping(value = "/webhook", method = RequestMethod.POST)
+    public String webHookResponse(@RequestParam("body") String body) {
+        //List<String> messagings = body.entry.get(0).messaging;
+        return body;
     }
 }
