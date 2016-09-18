@@ -10,13 +10,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HelloController {
 
+    private final String pageToken = "EAAE0KtuIWZCEBAHvCrK37GshyZAD7Vti3nTIhglj74s4HwkYZAMMZBs3fRCR2hyhqtvEHpyE785qLfQL7RN8Gdn8Q3ZBjwyznyKgWYbZC9VU2Nj8XWLfAASaOujcnpM3ZArYgANuy5EocgK5K2wL66MK6LJcdLBLwUNdTZC54BFZAMQZDZD";
+    private final String verifyToken = "SAY_HELLO_BOT";
+
     @RequestMapping("/")
     public String index() {
         return "Greetings from Spring Boot!";
     }
 
     @RequestMapping("/webhook")
-    public String bootResponse(@RequestParam(required = false) String req) {
-        return "Greetings from Spring Boot!";
+    public String webHookResponse(@RequestParam(required = false) String req) {
+        return req;
     }
 }
