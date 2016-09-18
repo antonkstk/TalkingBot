@@ -19,8 +19,8 @@ public class HelloController {
     }
 
     @RequestMapping("/webhook")
-    public String webHookResponse(@RequestParam("hub.challenge") String challenge, @RequestParam("hub.verify_token") String verifyToken) {
-        if(verifyToken.equals(pageToken)) {
+    public String webHookResponse(@RequestParam("hub.challenge") String challenge, @RequestParam("hub.verify_token") String verify_token) {
+        if(verify_token.equals(verifyToken)) {
             return challenge;
         }
         else {
