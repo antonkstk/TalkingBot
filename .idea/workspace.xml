@@ -2,10 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7867dcff-25ec-4768-b55e-990faa5be4fe" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/Hello/HelloControllerTest.java" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/Hello/Application.java" afterPath="$PROJECT_DIR$/src/main/java/TalkingChatbot/Application.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/Hello/HelloController.java" afterPath="$PROJECT_DIR$/src/main/java/TalkingChatbot/Controller/WebhookController.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/checkstyle-idea.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/TalkingChatbot/Controller/WebhookController.java" afterPath="$PROJECT_DIR$/src/main/java/TalkingChatbot/Controller/WebhookController.java" />
     </list>
     <ignored path="Springbootapp.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -41,8 +40,8 @@
       <file leaf-file-name="WebhookController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/TalkingChatbot/Controller/WebhookController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="26" column="9" selection-start-line="26" selection-start-column="9" selection-end-line="26" selection-end-column="9" />
+            <state relative-caret-position="345">
+              <caret line="25" column="21" selection-start-line="25" selection-start-column="21" selection-end-line="25" selection-end-column="21" />
               <folding />
             </state>
           </provider>
@@ -723,12 +722,20 @@
       <workItem from="1473948684519" duration="3348000" />
       <workItem from="1476274064380" duration="108000" />
       <workItem from="1477857684234" duration="278000" />
-      <workItem from="1490023240171" duration="2092000" />
+      <workItem from="1490023240171" duration="2445000" />
     </task>
+    <task id="LOCAL-00001" summary="another try">
+      <created>1490027772331</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1490027772331</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10351000" />
+    <option name="totallyTimeSpent" value="10704000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1440" y="0" width="1440" height="900" extended-state="0" />
@@ -774,6 +781,10 @@
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="another try" />
+    <option name="LAST_COMMIT_MESSAGE" value="another try" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -948,8 +959,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/TalkingChatbot/Controller/WebhookController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="26" column="9" selection-start-line="26" selection-start-column="9" selection-end-line="26" selection-end-column="9" />
+        <state relative-caret-position="345">
+          <caret line="25" column="21" selection-start-line="25" selection-start-column="21" selection-end-line="25" selection-end-column="21" />
           <folding />
         </state>
       </provider>

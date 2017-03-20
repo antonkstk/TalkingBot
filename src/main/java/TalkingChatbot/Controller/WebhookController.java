@@ -17,13 +17,13 @@ public class WebhookController {
     }
 
     @RequestMapping(value = "/webhook", method = RequestMethod.GET)
-    public String getWebhook(@RequestParam("challenge") String challenge, @RequestParam("verify_token") String verify_token,
-             @RequestParam("mode") String mode) {
+    public Integer getWebhook(@RequestParam("hub.challenge") String challenge, @RequestParam("hub.verify_token") String verify_token,
+             @RequestParam("hub.mode") String mode) {
         if(verify_token.equals(verifyToken)) {
-            return challenge;
+            return Integer.parseInt(challenge);
         }
         else {
-            return "ERROR!";
+            return 0;
         }
     }
 
