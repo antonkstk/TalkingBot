@@ -8,8 +8,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class WebhookController {
 
-    private final String pageToken = "EAAE0KtuIWZCEBAHvCrK37GshyZAD7Vti3nTIhglj74s4HwkYZAMMZBs3fRCR2hyhqtvEHpyE785qLfQL7RN8Gdn8Q3ZBjwyznyKgWYbZC9VU2Nj8XWLfAASaOujcnpM3ZArYgANuy5EocgK5K2wL66MK6LJcdLBLwUNdTZC54BFZAMQZDZD";
-    private final String verifyToken = "SAY_HELLO_BOT";
+    private final String verifyToken = "EAAU3dkADtksBALsYVifZA9HEAuBAb4MRAaLZCoZCCv63HYsPwhl1fXkgmkaPMQaTtKxMmmGm4yydplimqbEwsBVqiPiLkq8ntag9CSghzCQksvOfLPjAPrTszVEsHQMEaod1sQrlBC9YvbJJ8ZAOWnjHnxISHjCOhWvMsAV41QZDZD";
 
     @RequestMapping("/")
     public String index() {
