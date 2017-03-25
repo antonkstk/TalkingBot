@@ -39,6 +39,7 @@ public class WebhookController {
         try {
             JSONObject rootJSON = (JSONObject) new JSONParser().parse(jsonString);
             JSONArray entry = (JSONArray) rootJSON.get("entry");
+            System.out.println("Entry: " + entry);
             for(Object rootEl: entry.toArray()){
                 JSONObject requestBody = (JSONObject)rootEl;
                 JSONArray messaging = (JSONArray) requestBody.get("messaging");
