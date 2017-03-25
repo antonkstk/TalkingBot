@@ -31,7 +31,7 @@ public class WebhookController {
 
     @RequestMapping(value = "/webhook", method = RequestMethod.POST)
     public String postWebhook(@RequestBody String request) {
-
+        System.out.println("Message received");
         return request;
     }
 }
