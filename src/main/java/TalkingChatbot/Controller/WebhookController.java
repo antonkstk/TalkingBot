@@ -33,25 +33,19 @@ public class WebhookController {
     }
 
     @RequestMapping(value = "/webhook", method = RequestMethod.POST)
-    public String postWebhook(@RequestBody String jsonString) {
-        String messageText;
+    public ResponseEntity<String> postWebhook(@RequestBody String jsonString) {
+        String messageText = "messageText";
 
         try {
             JSONObject rootJSON = (JSONObject) new JSONParser().parse(jsonString);
             JSONArray entry = (JSONArray) rootJSON.get("entry");
-
-            System.out.println("Entry: " + entry);
             for(Object rootEl: entry.toArray()){
                 JSONObject requestBody = (JSONObject)rootEl;
                 JSONArray messaging = (JSONArray) requestBody.get("messaging");
-
-                System.out.println("Messaging: " + messaging);
                 for(Object messagingEl: messaging.toArray()){
                     JSONObject messageData = (JSONObject) messagingEl;
                     JSONObject message = (JSONObject) messageData.get("message");
                     messageText = message.get("text").toString();
-
-                    System.out.println("Message: " + messageText);
                 }
             }
         }
@@ -60,6 +54,6 @@ public class WebhookController {
         }
 
 
-        return jsonString;
+        return new ResponseEntity(messageText, HttpStatus.OK);
     }
 }
