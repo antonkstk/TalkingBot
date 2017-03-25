@@ -1,6 +1,9 @@
 package TalkingChatbot.Controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,8 +33,29 @@ public class WebhookController {
     }
 
     @RequestMapping(value = "/webhook", method = RequestMethod.POST)
-    public String postWebhook(@RequestBody String request) {
-        System.out.println("Message received: " + request);
-        return request;
+    public String postWebhook(@RequestBody String jsonString) {
+        //System.out.println("Message received: " + jsonString);
+
+        try {
+            JSONObject rootJSON = (JSONObject) new JSONParser().parse(jsonString);
+            JSONArray entry = (JSONArray) rootJSON.get("entry");
+            for(Object el: entry.toArray()){
+
+                JSONObject messaging = (JSONObject)el;
+                System.out.println("Messaging: " + messaging);
+                JSONArray messageList = (JSONArray) messaging.get("messaging");
+                System.out.println("Messaging list: " + messageList);
+                /*for(Object messageObj: messageList.toArray()){
+                    JSONObject issue = (JSONObject) messageObj;
+                    //do something with the issue
+                }*/
+            }
+        }
+        catch (ParseException e) {
+            System.out.println(e);
+        }
+
+
+        return jsonString;
     }
 }
