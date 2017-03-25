@@ -39,16 +39,14 @@ public class WebhookController {
         try {
             JSONObject rootJSON = (JSONObject) new JSONParser().parse(jsonString);
             JSONArray entry = (JSONArray) rootJSON.get("entry");
-            for(Object el: entry.toArray()){
-
-                JSONObject messaging = (JSONObject)el;
-                System.out.println("Messaging: " + messaging);
+            for(Object rootEl: entry.toArray()){
+                JSONObject messaging = (JSONObject)rootEl;
                 JSONArray messageList = (JSONArray) messaging.get("messaging");
-                System.out.println("Messaging list: " + messageList);
-                /*for(Object messageObj: messageList.toArray()){
-                    JSONObject issue = (JSONObject) messageObj;
-                    //do something with the issue
-                }*/
+                System.out.println("Messaging list: " + messaging.get("messaging"));
+                for(Object messageObj: messageList.toArray()){
+                    JSONObject messageData = (JSONObject) messageObj;
+                    System.out.print("Message text: " + messageData.get("text"));
+                }
             }
         }
         catch (ParseException e) {
