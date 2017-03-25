@@ -40,12 +40,16 @@ public class WebhookController {
             JSONObject rootJSON = (JSONObject) new JSONParser().parse(jsonString);
             JSONArray entry = (JSONArray) rootJSON.get("entry");
             for(Object rootEl: entry.toArray()){
-                JSONObject messaging = (JSONObject)rootEl;
-                JSONArray messageList = (JSONArray) messaging.get("messaging");
-                System.out.println("Messaging list: " + messaging.get("messaging"));
-                for(Object messageObj: messageList.toArray()){
-                    JSONObject messageData = (JSONObject) messageObj;
-                    System.out.print("Message text: " + messageData.get("text"));
+                JSONObject requestBody = (JSONObject)rootEl;
+                JSONArray messaging = (JSONArray) requestBody.get("messaging");
+                for(Object messagingEl: messaging.toArray()){
+                    JSONObject messageData = (JSONObject) messagingEl;
+                    JSONArray messageBody = (JSONArray) messageData.get("message");
+                    for(Object messageEl: messageBody.toArray()){
+                        JSONObject message = (JSONObject) messageEl;
+                        JSONArray messageText = (JSONArray) message.get("text");
+                        System.out.println("Message text: " + messageText);
+                    }
                 }
             }
         }
