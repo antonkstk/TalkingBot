@@ -21,7 +21,7 @@ public class WebhookController {
     @RequestMapping(value = "/webhook", method = RequestMethod.GET)
     public ResponseEntity<Integer> getWebhook(@RequestParam("hub.challenge") String challenge, @RequestParam("hub.verify_token") String verify_token,
              @RequestParam("hub.mode") String mode) {
-        if(verify_token.equals(verifyToken)) {
+        if(verify_token.equals(verifyToken) && mode.equals("subscribe")) {
             return new ResponseEntity(Integer.parseInt(challenge), HttpStatus.OK);
         }
         else {
@@ -30,8 +30,8 @@ public class WebhookController {
     }
 
     @RequestMapping(value = "/webhook", method = RequestMethod.POST)
-    public ResponseEntity<?> postWebhook(@RequestBody String request) {
+    public String postWebhook(@RequestBody String request) {
 
-        return ResponseEntity.ok().build();
+        return request;
     }
 }
