@@ -1,5 +1,8 @@
 package TalkingChatbot.Controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -16,20 +19,19 @@ public class WebhookController {
     }
 
     @RequestMapping(value = "/webhook", method = RequestMethod.GET)
-    public Integer getWebhook(@RequestParam("hub.challenge") String challenge, @RequestParam("hub.verify_token") String verify_token,
+    public ResponseEntity<Integer> getWebhook(@RequestParam("hub.challenge") String challenge, @RequestParam("hub.verify_token") String verify_token,
              @RequestParam("hub.mode") String mode) {
         if(verify_token.equals(verifyToken)) {
-            return Integer.parseInt(challenge);
+            return new ResponseEntity(Integer.parseInt(challenge), HttpStatus.OK);
         }
         else {
-            return 0;
+            return new ResponseEntity(0, HttpStatus.NOT_FOUND);
         }
     }
 
     @RequestMapping(value = "/webhook", method = RequestMethod.POST)
-    public String postWebhook(@RequestBody String body) {
-        //List<String> messagings = body.entry.get(0).messaging;
-        //throw new Exception(body);
-        return body;
+    public ResponseEntity<?> postWebhook(@RequestBody String request) {
+
+        return ResponseEntity.ok().build();
     }
 }
