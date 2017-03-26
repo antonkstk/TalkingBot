@@ -81,7 +81,7 @@ public class WebhookController {
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> entity = new HttpEntity(headers);
         System.out.println("HttpEntity: " + entity);
-        //restTemplate.postForEntity(url, HttpMethod.POST, String.class);
+        restTemplate.postForObject(url, HttpMethod.POST, String.class);
 
     }
 }
