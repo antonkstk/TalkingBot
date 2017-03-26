@@ -4,9 +4,10 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * Created by anton on 8/12/16.
@@ -14,7 +15,11 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class WebhookController {
 
+    private final String uri = "https://graph.facebook.com/v2.6/me/messages";
     private final String verifyToken = "EAAU3dkADtksBALsYVifZA9HEAuBAb4MRAaLZCoZCCv63HYsPwhl1fXkgmkaPMQaTtKxMmmGm4yydplimqbEwsBVqiPiLkq8ntag9CSghzCQksvOfLPjAPrTszVEsHQMEaod1sQrlBC9YvbJJ8ZAOWnjHnxISHjCOhWvMsAV41QZDZD";
+    private String messageId = "";
+    private String messageText = "";
+    private String recipientId = "";
 
     @RequestMapping("/")
     public String index() {
@@ -33,9 +38,7 @@ public class WebhookController {
     }
 
     @RequestMapping(value = "/webhook", method = RequestMethod.POST)
-    public ResponseEntity<String> postWebhook(@RequestBody String jsonString) {
-        String messageText = "messageText";
-
+    public void postWebhook(@RequestBody String jsonString) {
         try {
             JSONObject rootJSON = (JSONObject) new JSONParser().parse(jsonString);
             JSONArray entry = (JSONArray) rootJSON.get("entry");
@@ -43,18 +46,41 @@ public class WebhookController {
             for(Object rootEl: entry.toArray()){
                 JSONObject requestBody = (JSONObject)rootEl;
                 JSONArray messaging = (JSONArray) requestBody.get("messaging");
+                messageId = requestBody.get("id").toString();
                 for(Object messagingEl: messaging.toArray()){
                     JSONObject messageData = (JSONObject) messagingEl;
                     JSONObject message = (JSONObject) messageData.get("message");
+                    JSONObject recipient = (JSONObject) messageData.get("recipient");
+                    recipientId = recipient.get("id").toString();
                     messageText = message.get("text").toString();
                 }
             }
         }
         catch (ParseException e) {
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
 
+        sendMessageBack(recipientId, messageText);
 
-        return new ResponseEntity(messageText, HttpStatus.OK);
+    }
+
+    private void sendMessageBack(String recipientId, String messageText) {
+        JSONObject messageData = new JSONObject();
+        JSONObject recipient = new JSONObject();
+        JSONObject message = new JSONObject();
+        recipient.put("id", recipientId);
+        message.put("text", messageText);
+        messageData.put("recipient", recipient);
+        messageData.put("message", message);
+
+        System.out.println("Recipient: " + recipient + " Message data: " + messageData);
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> entity = new HttpEntity(headers);
+        restTemplate.postForEntity(uri, HttpMethod.POST, String.class);
+
     }
 }
