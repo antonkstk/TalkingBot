@@ -7,7 +7,6 @@ import org.json.simple.parser.ParseException;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * Created by anton on 8/12/16.
@@ -71,9 +70,6 @@ public class WebhookController {
         catch (ParseException e) {
             System.out.println(e.getMessage());
         }
-
-
-
     }
 
     /**
@@ -87,8 +83,8 @@ public class WebhookController {
         JSONObject message = new JSONObject();
         JSONObject queryString = new JSONObject();
         queryString.put("access_token", verifyToken);
-        recipient.put("id", "1110000515732631");
-        message.put("text", "hello");
+        recipient.put("id", recipientId);
+        message.put("text", "Hello, " + messageText + "!");
         messageData.put("recipient", recipient);
         messageData.put("message", message);
 
