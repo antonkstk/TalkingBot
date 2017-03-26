@@ -15,7 +15,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RestController
 public class WebhookController {
 
-    private final String uri = "https://graph.facebook.com/v2.6/me/messages";
+    private final String url = "https://graph.facebook.com/v2.6/me/messages";
     private final String verifyToken = "EAAU3dkADtksBALsYVifZA9HEAuBAb4MRAaLZCoZCCv63HYsPwhl1fXkgmkaPMQaTtKxMmmGm4yydplimqbEwsBVqiPiLkq8ntag9CSghzCQksvOfLPjAPrTszVEsHQMEaod1sQrlBC9YvbJJ8ZAOWnjHnxISHjCOhWvMsAV41QZDZD";
     private String messageId = "";
     private String messageText = "";
@@ -42,7 +42,7 @@ public class WebhookController {
         try {
             JSONObject rootJSON = (JSONObject) new JSONParser().parse(jsonString);
             JSONArray entry = (JSONArray) rootJSON.get("entry");
-            System.out.println("Entry: " + entry);
+            System.out.println("Entry: " + entry);//remove <-
             for(Object rootEl: entry.toArray()){
                 JSONObject requestBody = (JSONObject)rootEl;
                 JSONArray messaging = (JSONArray) requestBody.get("messaging");
@@ -80,7 +80,8 @@ public class WebhookController {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> entity = new HttpEntity(headers);
-        restTemplate.postForEntity(uri, HttpMethod.POST, String.class);
+        System.out.println("HttpEntity: " + entity);
+        //restTemplate.postForEntity(url, HttpMethod.POST, String.class);
 
     }
 }
