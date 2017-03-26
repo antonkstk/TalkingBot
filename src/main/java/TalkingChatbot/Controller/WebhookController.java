@@ -44,7 +44,7 @@ public class WebhookController {
 
             if(rootJSON.get("entry") != null) {
                 JSONArray entry = (JSONArray) rootJSON.get("entry");
-                //System.out.println("Entry: " + entry);//remove <-
+                System.out.println("Entry: " + entry);//remove <-
                 for (Object rootEl : entry.toArray()) {
                     JSONObject requestBody = (JSONObject) rootEl;
 
