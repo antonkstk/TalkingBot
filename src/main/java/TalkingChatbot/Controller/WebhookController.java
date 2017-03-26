@@ -97,7 +97,7 @@ public class WebhookController {
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> entity = new HttpEntity(messageData.toJSONString(), headers);
 
-        restTemplate.postForEntity(url + "?access_token=" + verifyToken, HttpMethod.POST, String.class, entity);
+        restTemplate.postForObject(url + "?access_token=" + verifyToken, HttpMethod.POST, String.class, entity);
 
 
     }
