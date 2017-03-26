@@ -43,7 +43,7 @@ public class WebhookController {
 
             if(rootJSON.get("entry") != null) {
                 JSONArray entry = (JSONArray) rootJSON.get("entry");
-                System.out.println("Entry: " + entry);//remove <-
+                //System.out.println("Entry: " + entry);//remove <-
                 JSONObject requestBody = (JSONObject) entry.toArray()[0];
                 //for (Object rootEl : entry.toArray()) {
                     //JSONObject requestBody = (JSONObject) rootEl;
@@ -59,6 +59,7 @@ public class WebhookController {
                                 JSONObject message = (JSONObject) messageData.get("message");
                                 JSONObject sender = (JSONObject) messageData.get("sender");
                                 recipientId = sender.get("id").toString();
+                                System.out.println("Recipient: " + recipientId);
                                 messageText = message.get("text").toString();
                                 sendMessageBack(recipientId, messageText);
                             }
@@ -84,7 +85,7 @@ public class WebhookController {
         JSONObject queryString = new JSONObject();
         queryString.put("access_token", verifyToken);
         recipient.put("id", recipientId);
-        message.put("text", "Hello, " + messageText + "!");
+        message.put("text", messageText);
         messageData.put("recipient", recipient);
         messageData.put("message", message);
 
