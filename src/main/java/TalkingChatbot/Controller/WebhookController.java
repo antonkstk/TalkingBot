@@ -64,10 +64,17 @@ public class WebhookController {
 
     }
 
+    /**
+     * add all the needed checking conditions!!!
+     * @param recipientId
+     * @param messageText
+     */
     private void sendMessageBack(String recipientId, String messageText) {
         JSONObject messageData = new JSONObject();
         JSONObject recipient = new JSONObject();
         JSONObject message = new JSONObject();
+        JSONObject queryString = new JSONObject();
+        queryString.put("access_token", verifyToken);
         recipient.put("id", recipientId);
         message.put("text", messageText);
         messageData.put("recipient", recipient);
@@ -79,7 +86,8 @@ public class WebhookController {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<String> entity = new HttpEntity(headers);
+        HttpEntity<String> entity = new HttpEntity(queryString.toString(), headers);
+
         System.out.println("HttpEntity: " + entity);
         restTemplate.postForObject(url, HttpMethod.POST, String.class);
 
