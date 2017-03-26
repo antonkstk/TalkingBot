@@ -86,10 +86,10 @@ public class WebhookController {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<String> entity = new HttpEntity(queryString.toString(), headers);
+        HttpEntity<String> entity = new HttpEntity(messageData.toJSONString(), headers);
 
         System.out.println("HttpEntity: " + entity);
-        restTemplate.postForObject(url, HttpMethod.POST, String.class);
+        restTemplate.postForObject(url + "?access_token=" + verifyToken, HttpMethod.POST, String.class);
 
     }
 }
