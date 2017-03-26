@@ -39,7 +39,7 @@ public class WebhookController {
 
     @RequestMapping(value = "/webhook", method = RequestMethod.POST)
     public void postWebhook(@RequestBody String jsonString) {
-        try {
+        /*try {
             JSONObject rootJSON = (JSONObject) new JSONParser().parse(jsonString);
 
             if(rootJSON.get("entry") != null) {
@@ -69,7 +69,7 @@ public class WebhookController {
         }
         catch (ParseException e) {
             System.out.println(e.getMessage());
-        }
+        }*/
 
         sendMessageBack(recipientId, messageText);
 
@@ -86,8 +86,8 @@ public class WebhookController {
         JSONObject message = new JSONObject();
         JSONObject queryString = new JSONObject();
         queryString.put("access_token", verifyToken);
-        recipient.put("id", recipientId);
-        message.put("text", messageText);
+        recipient.put("id", "1110000515732631");
+        message.put("text", "hello");
         messageData.put("recipient", recipient);
         messageData.put("message", message);
 
@@ -97,7 +97,7 @@ public class WebhookController {
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> entity = new HttpEntity(messageData.toJSONString(), headers);
 
-        //restTemplate.exchange(url + "?access_token=" + verifyToken, HttpMethod.POST, entity, String.class);
+        restTemplate.exchange(url + "?access_token=" + verifyToken, HttpMethod.POST, entity, String.class);
 
     }
 }
