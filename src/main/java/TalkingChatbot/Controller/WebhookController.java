@@ -41,20 +41,27 @@ public class WebhookController {
     public void postWebhook(@RequestBody String jsonString) {
         try {
             JSONObject rootJSON = (JSONObject) new JSONParser().parse(jsonString);
-            JSONArray entry = (JSONArray) rootJSON.get("entry");
-            System.out.println("Entry: " + entry);//remove <-
-            for(Object rootEl: entry.toArray()){
-                JSONObject requestBody = (JSONObject)rootEl;
-                JSONArray messaging = (JSONArray) requestBody.get("messaging");
-                messageId = requestBody.get("id").toString();
-                for(Object messagingEl: messaging.toArray()){
-                    JSONObject messageData = (JSONObject) messagingEl;
-                    JSONObject message = (JSONObject) messageData.get("message");
-                    JSONObject sender = (JSONObject) messageData.get("sender");
-                    //if(sender != null && message != null) {
-                        recipientId = sender.get("id").toString();
-                        messageText = message.get("text").toString();
-                    //}
+
+            if(rootJSON.get("entry") != null) {
+                JSONArray entry = (JSONArray) rootJSON.get("entry");
+                //System.out.println("Entry: " + entry);//remove <-
+                for (Object rootEl : entry.toArray()) {
+                    JSONObject requestBody = (JSONObject) rootEl;
+
+                    if (requestBody.get("messaging") != null) {
+                        JSONArray messaging = (JSONArray) requestBody.get("messaging");
+                        messageId = requestBody.get("id").toString();
+                        for (Object messagingEl : messaging.toArray()) {
+                            JSONObject messageData = (JSONObject) messagingEl;
+
+                            if (messageData.get("message") != null && messageData.get("sender") != null) {
+                                JSONObject message = (JSONObject) messageData.get("message");
+                                JSONObject sender = (JSONObject) messageData.get("sender");
+                                recipientId = sender.get("id").toString();
+                                messageText = message.get("text").toString();
+                            }
+                        }
+                    }
                 }
             }
         }
