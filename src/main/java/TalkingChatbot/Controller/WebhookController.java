@@ -51,7 +51,7 @@ public class WebhookController {
                     JSONObject messageData = (JSONObject) messagingEl;
                     JSONObject message = (JSONObject) messageData.get("message");
                     JSONObject sender = (JSONObject) messageData.get("sender");
-                    if(sender.get("id") != null && message.get("text")!= null) {
+                    if(sender != null && message != null) {
                         recipientId = sender.get("id").toString();
                         messageText = message.get("text").toString();
                     }
@@ -82,15 +82,12 @@ public class WebhookController {
         messageData.put("recipient", recipient);
         messageData.put("message", message);
 
-        System.out.println("Recipient: " + recipient + " Message data: " + messageData);
-
         RestTemplate restTemplate = new RestTemplate();
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> entity = new HttpEntity(messageData.toJSONString(), headers);
 
-        System.out.println("HttpEntity: " + entity);
         restTemplate.exchange(url + "?access_token=" + verifyToken, HttpMethod.POST, entity, String.class);
 
     }
