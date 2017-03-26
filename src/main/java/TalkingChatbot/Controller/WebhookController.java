@@ -51,10 +51,10 @@ public class WebhookController {
                     JSONObject messageData = (JSONObject) messagingEl;
                     JSONObject message = (JSONObject) messageData.get("message");
                     JSONObject sender = (JSONObject) messageData.get("sender");
-                    if(sender != null && message != null) {
+                    //if(sender != null && message != null) {
                         recipientId = sender.get("id").toString();
                         messageText = message.get("text").toString();
-                    }
+                    //}
                 }
             }
         }
