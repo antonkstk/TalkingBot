@@ -89,7 +89,7 @@ public class WebhookController {
         HttpEntity<String> entity = new HttpEntity(messageData.toJSONString(), headers);
 
         System.out.println("HttpEntity: " + entity);
-        restTemplate.postForObject(url + "?access_token=" + verifyToken, HttpMethod.POST, String.class);
+        restTemplate.exchange(url + "?access_token=" + verifyToken, HttpMethod.POST, entity, String.class);
 
     }
 }
