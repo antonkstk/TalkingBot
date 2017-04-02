@@ -13,12 +13,8 @@ import org.springframework.web.client.RestTemplate;
  */
 @Service
 public class SendResponseService {
-
-   private String recipient = "";
-   private String messageText = "";
-
    /**
-    *
+    * this method sends the input message back to user
     * @param recipientId - the id of the message recipient
     * @param messageText - the massage body
     */

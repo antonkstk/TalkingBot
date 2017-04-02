@@ -8,7 +8,6 @@ import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
 /**
  * Created by anton on 8/12/16.
@@ -49,16 +48,10 @@ public class WebhookController {
                 JSONArray entry = (JSONArray) rootJSON.get("entry");
                 System.out.println("Entry: " + entry);//remove <-
                 JSONObject requestBody = (JSONObject) entry.toArray()[0];
-                //for (Object rootEl : entry.toArray()) {
-                    //JSONObject requestBody = (JSONObject) rootEl;
-
                     if (requestBody.get("messaging") != null) {
                         JSONArray messaging = (JSONArray) requestBody.get("messaging");
                         String messageId = requestBody.get("id").toString();
                         JSONObject messageData = (JSONObject) messaging.toArray()[0];
-                        //for (Object messagingEl : messaging.toArray()) {
-                        //    JSONObject messageData = (JSONObject) messagingEl;
-
                             if (messageData.get("message") != null) {
                                 JSONObject message = (JSONObject) messageData.get("message");
                                 JSONObject sender = (JSONObject) messageData.get("sender");
@@ -67,9 +60,7 @@ public class WebhookController {
                                 messageText = message.get("text").toString();
                                 SendResponseService.sendMessageBack(recipientId, messageText, verifyToken, url);
                             }
-                        //}
                     }
-                //}
             }
         }
         catch (ParseException e) {
