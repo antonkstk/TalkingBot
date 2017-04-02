@@ -1,9 +1,11 @@
 package TalkingChatbot.Controller;
 
+import TalkingChatbot.Service.SendResponseService;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
@@ -14,9 +16,11 @@ import org.springframework.web.client.RestTemplate;
 @RestController
 public class WebhookController {
 
+    @Autowired
+    SendResponseService sendResponseService;
+
     private final String url = "https://graph.facebook.com/v2.6/me/messages";
     private final String verifyToken = "EAAU3dkADtksBALsYVifZA9HEAuBAb4MRAaLZCoZCCv63HYsPwhl1fXkgmkaPMQaTtKxMmmGm4yydplimqbEwsBVqiPiLkq8ntag9CSghzCQksvOfLPjAPrTszVEsHQMEaod1sQrlBC9YvbJJ8ZAOWnjHnxISHjCOhWvMsAV41QZDZD";
-    private String messageId = "";
     private String messageText = "";
     private String recipientId = "";
 
@@ -29,6 +33,7 @@ public class WebhookController {
     public ResponseEntity<Integer> getWebhook(@RequestParam("hub.challenge") String challenge, @RequestParam("hub.verify_token") String verify_token,
              @RequestParam("hub.mode") String mode) {
         if(verify_token.equals(verifyToken) && mode.equals("subscribe")) {
+            System.out.println("if block was called!");
             return new ResponseEntity(Integer.parseInt(challenge), HttpStatus.OK);
         }
         else {
@@ -50,7 +55,7 @@ public class WebhookController {
 
                     if (requestBody.get("messaging") != null) {
                         JSONArray messaging = (JSONArray) requestBody.get("messaging");
-                        messageId = requestBody.get("id").toString();
+                        String messageId = requestBody.get("id").toString();
                         JSONObject messageData = (JSONObject) messaging.toArray()[0];
                         //for (Object messagingEl : messaging.toArray()) {
                         //    JSONObject messageData = (JSONObject) messagingEl;
@@ -61,7 +66,7 @@ public class WebhookController {
                                 recipientId = sender.get("id").toString();
                                 System.out.println("Recipient: " + recipientId);
                                 messageText = message.get("text").toString();
-                                sendMessageBack(recipientId, messageText);
+                                SendResponseService.sendMessageBack(recipientId, messageText, verifyToken, url);
                             }
                         //}
                     }
@@ -71,31 +76,5 @@ public class WebhookController {
         catch (ParseException e) {
             System.out.println(e.getMessage());
         }
-    }
-
-    /**
-     * add all the needed checking conditions!!!
-     * @param recipientId
-     * @param messageText
-     */
-    private void sendMessageBack(String recipientId, String messageText) {
-        JSONObject messageData = new JSONObject();
-        JSONObject recipient = new JSONObject();
-        JSONObject message = new JSONObject();
-        JSONObject queryString = new JSONObject();
-        queryString.put("access_token", verifyToken);
-        recipient.put("id", recipientId);
-        message.put("text", messageText);
-        messageData.put("recipient", recipient);
-        messageData.put("message", message);
-
-        RestTemplate restTemplate = new RestTemplate();
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<String> entity = new HttpEntity(messageData.toJSONString(), headers);
-
-        restTemplate.exchange(url + "?access_token=" + verifyToken, HttpMethod.POST, entity, String.class);
-
     }
 }
