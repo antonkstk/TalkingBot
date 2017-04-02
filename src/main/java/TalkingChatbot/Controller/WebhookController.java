@@ -33,7 +33,6 @@ public class WebhookController {
     public ResponseEntity<Integer> getWebhook(@RequestParam("hub.challenge") String challenge, @RequestParam("hub.verify_token") String verify_token,
              @RequestParam("hub.mode") String mode) {
         if(verify_token.equals(verifyToken) && mode.equals("subscribe")) {
-            System.out.println("if block was called!");
             return new ResponseEntity(Integer.parseInt(challenge), HttpStatus.OK);
         }
         else {
